@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Prisma AI</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#0F172A">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <section id="landing" class="landing">
+    <div class="landing-nav">
+      <div class="brand">
+        <img src="icon.png" alt="Prisma AI" class="brand-logo" onerror="this.style.display='none'">
+        <span>Prisma AI</span>
+      </div>
+      <div class="landing-actions">
+        <button class="btn btn-ghost" onclick="abrirLogin()">Entrar</button>
+        <button class="btn btn-primary" onclick="abrirLogin()">Começar grátis</button>
+      </div>
+    </div>
+
+    <div class="landing-hero">
+      <div class="hero-copy">
+        <span class="hero-badge">WhatsApp + Voz + IA</span>
+        <h1>Seu assistente financeiro inteligente</h1>
+        <p>
+          Registre gastos, receitas, cartões, metas e compras parceladas com uma experiência simples,
+          moderna e pronta para crescer.
+        </p>
+
+        <div class="hero-cta">
+          <button class="btn btn-primary btn-lg" onclick="abrirLogin()">Começar agora</button>
+          <button class="btn btn-secondary btn-lg" onclick="scrollToPlanos()">Ver planos</button>
+        </div>
+
+        <div class="hero-points">
+          <div>✓ Dashboard premium</div>
+          <div>✓ Cartões e fatura</div>
+          <div>✓ Metas financeiras</div>
+          <div>✓ PWA instalável</div>
+        </div>
+      </div>
+
+      <div class="hero-preview">
+        <div class="preview-card">
+          <div class="preview-top">
+            <span>Saldo</span>
+            <strong>R$ 12.480,00</strong>
+          </div>
+          <div class="preview-grid">
+            <div class="mini-card">
+              <span>Receitas</span>
+              <strong>R$ 8.250,00</strong>
+            </div>
+            <div class="mini-card danger">
+              <span>Despesas</span>
+              <strong>R$ 3.120,00</strong>
+            </div>
+          </div>
+          <div class="preview-chart"></div>
+          <div class="preview-list">
+            <div class="preview-item">
+              <span>iFood</span>
+              <strong>- R$ 48,00</strong>
+            </div>
+            <div class="preview-item">
+              <span>Salário</span>
+              <strong>+ R$ 3.500,00</strong>
+            </div>
+            <div class="preview-item">
+              <span>Meta Viagem</span>
+              <strong>67%</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="landing-features">
+      <div class="feature-card">
+        <h3>Lançamentos rápidos</h3>
+        <p>Receitas e despesas com fluxo simples e visual profissional.</p>
+      </div>
+      <div class="feature-card">
+        <h3>Cartões e parcelas</h3>
+        <p>Controle cartões, compras parceladas e acompanhe faturas.</p>
+      </div>
+      <div class="feature-card">
+        <h3>Metas financeiras</h3>
+        <p>Defina objetivos e acompanhe seu progresso em tempo real.</p>
+      </div>
+      <div class="feature-card">
+        <h3>Pronto para IA</h3>
+        <p>Estrutura ideal para evoluir com WhatsApp, voz e classificação inteligente.</p>
+      </div>
+    </div>
+
+    <div class="pricing" id="planos">
+      <div class="price-card">
+        <h3>Plano Grátis</h3>
+        <p class="price-value">R$ 0</p>
+        <ul>
+          <li>Até 50 transações</li>
+          <li>1 cartão</li>
+          <li>1 meta</li>
+        </ul>
+      </div>
+
+      <div class="price-card highlight">
+        <h3>Plano Premium</h3>
+        <p class="price-value">R$ 19,90</p>
+        <ul>
+          <li>Transações ilimitadas</li>
+          <li>Cartões ilimitados</li>
+          <li>Metas ilimitadas</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="login" class="auth-shell" style="display:none">
+    <div class="auth-card">
+      <img src="icon.png" alt="Prisma AI" class="auth-logo" onerror="this.style.display='none'">
+      <h2>Prisma AI</h2>
+      <p>Entre na sua conta e acompanhe sua vida financeira.</p>
+
+      <input id="email" type="email" placeholder="Email">
+      <input id="password" type="password" placeholder="Senha">
+
+      <button class="btn btn-primary" onclick="login()">Entrar</button>
+      <button class="btn btn-secondary" onclick="register()">Criar conta</button>
+      <button class="btn btn-ghost dark-ghost" onclick="mostrarLanding()">Voltar</button>
+    </div>
+  </section>
+
+  <div id="app" class="app-shell" style="display:none">
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <img src="icon.png" alt="Prisma AI" class="sidebar-logo" onerror="this.style.display='none'">
+        <div>
+          <strong>Prisma AI</strong>
+          <small>Assistente financeiro</small>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <button class="nav-btn active" onclick="mostrarSecao('dashboard', this)">Dashboard</button>
+        <button class="nav-btn" onclick="mostrarSecao('cartoes', this)">Cartões</button>
+        <button class="nav-btn" onclick="mostrarSecao('metas', this)">Metas</button>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="plan-card">
+          <span id="planoInfo">Plano: -</span>
+        </div>
+        <button class="btn btn-secondary" onclick="upgradeDemo()">Ativar premium demo</button>
+        <button class="btn btn-ghost" onclick="logout()">Sair</button>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div>
+          <h1>Dashboard</h1>
+          <p>Visão clara das suas finanças</p>
+        </div>
+
+        <div class="topbar-actions">
+          <input id="mesFiltro" type="month" onchange="recarregarTudo()">
+          <button class="btn btn-secondary" onclick="exportarCSV()">Exportar CSV</button>
+        </div>
+      </header>
+
+      <section id="sec-dashboard">
+        <div class="stats-grid">
+          <div class="stat-card">
+            <span>Saldo</span>
+            <strong id="saldoCard">R$ 0,00</strong>
+          </div>
+          <div class="stat-card">
+            <span>Receitas</span>
+            <strong id="receitasCard">R$ 0,00</strong>
+          </div>
+          <div class="stat-card danger">
+            <span>Despesas</span>
+            <strong id="despesasCard">R$ 0,00</strong>
+          </div>
+        </div>
+
+        <div class="content-grid">
+          <div class="panel">
+            <h3 id="tituloForm">Nova transação</h3>
+
+            <input id="descricao" placeholder="Descrição">
+            <input id="valor" type="number" step="0.01" placeholder="Valor">
+
+            <select id="tipo">
+              <option value="receita">Receita</option>
+              <option value="gasto">Despesa</option>
+            </select>
+
+            <select id="categoria">
+              <option value="">Selecione a categoria</option>
+              <option>Moradia</option>
+              <option>Alimentação</option>
+              <option>Transporte</option>
+              <option>Saúde</option>
+              <option>Lazer</option>
+              <option>Educação</option>
+              <option>Assinaturas</option>
+              <option>Salário</option>
+              <option>Freelance</option>
+              <option>Outros</option>
+            </select>
+
+            <div class="inline-actions">
+              <button class="btn btn-primary" onclick="salvarTransacao()">Salvar</button>
+              <button class="btn btn-secondary" onclick="cancelarEdicao()">Cancelar</button>
+            </div>
+          </div>
+
+          <div class="panel">
+            <h3>Transações</h3>
+            <ul id="lista" class="clean-list"></ul>
+          </div>
+        </div>
+
+        <div class="charts-grid">
+          <div class="panel">
+            <h3>Receitas x Despesas</h3>
+            <canvas id="graficoResumo"></canvas>
+          </div>
+
+          <div class="panel">
+            <h3>Gastos por categoria</h3>
+            <canvas id="graficoCategoria"></canvas>
+          </div>
+        </div>
+      </section>
+
+      <section id="sec-cartoes" style="display:none">
+        <div class="content-grid">
+          <div class="panel">
+            <h3>Novo cartão</h3>
+            <input id="cartao_nome" placeholder="Nome do cartão">
+            <input id="cartao_limite" type="number" step="0.01" placeholder="Limite">
+            <input id="cartao_fechamento" type="number" placeholder="Dia de fechamento">
+            <input id="cartao_vencimento" type="number" placeholder="Dia de vencimento">
+            <button class="btn btn-primary" onclick="addCartao()">Salvar cartão</button>
+          </div>
+
+          <div class="panel">
+            <h3>Compra no cartão</h3>
+            <select id="cartaoCompraSelect"></select>
+            <input id="compra_descricao" placeholder="Descrição da compra">
+            <input id="compra_valor" type="number" step="0.01" placeholder="Valor total">
+            <input id="compra_parcelas" type="number" placeholder="Parcelas">
+            <button class="btn btn-primary" onclick="addCompraCartao()">Salvar compra</button>
+          </div>
+        </div>
+
+        <div class="content-grid">
+          <div class="panel">
+            <h3>Cartões</h3>
+            <ul id="listaCartoes" class="clean-list"></ul>
+          </div>
+
+          <div class="panel">
+            <h3>Fatura</h3>
+            <select id="cartaoFaturaSelect" onchange="carregarFatura()"></select>
+            <ul id="listaFatura" class="clean-list"></ul>
+          </div>
+        </div>
+      </section>
+
+      <section id="sec-metas" style="display:none">
+        <div class="content-grid">
+          <div class="panel">
+            <h3>Nova meta</h3>
+            <input id="meta_nome" placeholder="Nome da meta">
+            <input id="meta_valor_meta" type="number" step="0.01" placeholder="Valor da meta">
+            <input id="meta_valor_atual" type="number" step="0.01" placeholder="Valor atual">
+            <button class="btn btn-primary" onclick="addMeta()">Salvar meta</button>
+          </div>
+
+          <div class="panel">
+            <h3>Metas</h3>
+            <ul id="listaMetas" class="clean-list"></ul>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
